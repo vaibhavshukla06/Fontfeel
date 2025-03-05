@@ -8,6 +8,9 @@ allowing analysis of fonts with characters from different writing systems.
 
 import os
 import numpy as np
+# Set the backend to 'Agg' which is non-interactive and doesn't require a GUI
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from fontTools.ttLib import TTFont
 from PIL import Image, ImageDraw, ImageFont

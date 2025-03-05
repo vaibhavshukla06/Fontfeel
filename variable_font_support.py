@@ -9,6 +9,9 @@ including axis information, design space analysis, and instance rendering.
 
 import os
 import numpy as np
+# Set the backend to 'Agg' which is non-interactive and doesn't require a GUI
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 from fontTools.ttLib import TTFont

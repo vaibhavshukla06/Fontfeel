@@ -2043,6 +2043,10 @@ def visualize_font_properties(font_info, output_dir=None):
     Returns:
         dict: Paths to generated visualization files if output_dir is provided, otherwise None
     """
+    # Set the backend to 'Agg' which is non-interactive and doesn't require a GUI
+    import matplotlib
+    matplotlib.use('Agg')
+    
     import matplotlib.pyplot as plt
     import seaborn as sns
     import numpy as np
@@ -2305,6 +2309,12 @@ def create_font_report(font_info, output_dir):
     # Generate visualizations
     viz_paths = visualize_font_properties(font_info, output_dir)
     
+    # Convert absolute paths to filenames only for use in the HTML
+    viz_filenames = {}
+    if viz_paths:
+        for key, path in viz_paths.items():
+            viz_filenames[key] = os.path.basename(path)
+    
     # Create HTML report
     html_content = f"""
     <!DOCTYPE html>
@@ -2344,14 +2354,16 @@ def create_font_report(font_info, output_dir):
                 box-shadow: 0 2px 5px rgba(0,0,0,0.1);
                 border-radius: 5px;
             }}
-            .metrics {{
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-between;
+            .metrics-grid {{
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 20px;
             }}
             .metric-item {{
-                flex: 0 0 48%;
-                margin-bottom: 15px;
+                background-color: #fff;
+                padding: 15px;
+                border-radius: 5px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             }}
             .metric-value {{
                 font-weight: bold;
@@ -2362,21 +2374,20 @@ def create_font_report(font_info, output_dir):
                 margin-top: 50px;
                 padding-top: 20px;
                 border-top: 1px solid #eee;
-                font-size: 0.9em;
                 color: #7f8c8d;
+                font-size: 0.9em;
             }}
         </style>
     </head>
     <body>
         <div class="header">
-            <h1>Font Analysis Report</h1>
-            <h2>{font_info['font_name']}</h2>
+            <h1>Font Analysis Report: {font_info['font_name']}</h1>
             <p>Format: {font_info['format']} | Style: {font_info['style']}</p>
         </div>
         
         <div class="section">
             <h2>Font Metrics</h2>
-            <div class="metrics">
+            <div class="metrics-grid">
                 <div class="metric-item">
                     <p>Weight: <span class="metric-value">{font_info['weight']['description']} ({font_info['weight']['class']})</span></p>
                 </div>
@@ -2415,7 +2426,7 @@ def create_font_report(font_info, output_dir):
             </div>
             
             <div class="viz-container">
-                <img src="{viz_paths.get('metrics_chart', '')}" alt="Font Metrics Visualization">
+                <img src="{viz_filenames.get('metrics_chart', '')}" alt="Font Metrics Visualization">
             </div>
         </div>
     """
@@ -2434,7 +2445,7 @@ def create_font_report(font_info, output_dir):
         
         html_content += f"""
             <div class="viz-container">
-                <img src="{viz_paths.get('personality_radar', '')}" alt="Font Personality Radar Chart">
+                <img src="{viz_filenames.get('personality_radar', '')}" alt="Font Personality Radar Chart">
             </div>
         """
         
@@ -2443,7 +2454,7 @@ def create_font_report(font_info, output_dir):
             html_content += f"""
             <h3>Recommended Use Cases</h3>
             <div class="viz-container">
-                <img src="{viz_paths.get('use_cases', '')}" alt="Font Use Cases">
+                <img src="{viz_filenames.get('use_cases', '')}" alt="Font Use Cases">
             </div>
             """
         
@@ -2457,7 +2468,7 @@ def create_font_report(font_info, output_dir):
         <div class="section">
             <h2>Font Sample</h2>
             <div class="viz-container">
-                <img src="{viz_paths.get('text_sample', '')}" alt="Font Sample Text">
+                <img src="{viz_filenames.get('text_sample', '')}" alt="Font Sample Text">
             </div>
         </div>
         """

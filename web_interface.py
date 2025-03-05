@@ -6,6 +6,10 @@ This module provides a web interface for the Font Validator tool,
 allowing users to upload and analyze fonts through a browser.
 """
 
+# Set the Matplotlib backend to 'Agg' (non-interactive) for web application use
+import matplotlib
+matplotlib.use('Agg')
+
 import os
 import tempfile
 import uuid
@@ -175,13 +179,32 @@ def analyze_font(filename):
             logger.info("Generating visualizations")
             output_dir = os.path.join(app.config['RESULTS_FOLDER'], filename.split('.')[0])
             os.makedirs(output_dir, exist_ok=True)
-            viz_paths = visualize_font_properties(font_properties, output_dir)
+            full_viz_paths = visualize_font_properties(font_properties, output_dir)
+            
+            # Convert the full paths to paths relative to RESULTS_FOLDER for the template
+            if full_viz_paths:
+                viz_paths = {k: os.path.relpath(v, app.config['RESULTS_FOLDER']) for k, v in full_viz_paths.items()}
+                logger.info(f"Visualizations generated: {list(viz_paths.keys())}")
+                # Log each visualization path for debugging
+                for viz_type, viz_path in viz_paths.items():
+                    logger.info(f"Visualization {viz_type}: {viz_path}")
+                    logger.info(f"Full path: {os.path.join(app.config['RESULTS_FOLDER'], viz_path)}")
+                    logger.info(f"File exists: {os.path.exists(os.path.join(app.config['RESULTS_FOLDER'], viz_path))}")
         
         # Generate report if requested
         report_path = None
         if request.args.get('generate_report', 'false').lower() == 'true' and viz_paths:
             logger.info("Generating report")
-            report_path = create_font_report(font_properties, viz_paths, app.config['RESULTS_FOLDER'])
+            # Create the output directory for the report
+            report_output_dir = os.path.join(app.config['RESULTS_FOLDER'], filename.split('.')[0])
+            full_report_path = create_font_report(font_properties, report_output_dir)
+            
+            # Convert the full path to a path relative to RESULTS_FOLDER for the template
+            if full_report_path:
+                report_path = os.path.relpath(full_report_path, app.config['RESULTS_FOLDER'])
+                logger.info(f"Report generated at: {report_path}")
+                logger.info(f"Full report path: {os.path.join(app.config['RESULTS_FOLDER'], report_path)}")
+                logger.info(f"Report file exists: {os.path.exists(os.path.join(app.config['RESULTS_FOLDER'], report_path))}")
         
         # Render the results page
         logger.info("Rendering results page")
@@ -202,6 +225,15 @@ def download_file(filename):
     """Serve generated files."""
     logger.info(f"Download route called for file: {filename}")
     try:
+        # Log the full path being requested
+        full_path = os.path.join(app.config['RESULTS_FOLDER'], filename)
+        logger.info(f"Attempting to serve file from: {full_path}")
+        
+        # Check if the file exists
+        if not os.path.exists(full_path):
+            logger.error(f"File not found: {full_path}")
+            return f"File not found: {filename}", 404
+            
         return send_from_directory(app.config['RESULTS_FOLDER'], filename)
     except Exception as e:
         logger.error(f"Error in download_file: {str(e)}")
