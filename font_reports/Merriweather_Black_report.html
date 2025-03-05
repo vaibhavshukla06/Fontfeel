@@ -1,0 +1,375 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Font Analysis Report: Merriweather Black</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            h1, h2, h3 {
+                color: #2c3e50;
+            }
+            .header {
+                text-align: center;
+                margin-bottom: 30px;
+                padding-bottom: 20px;
+                border-bottom: 1px solid #eee;
+            }
+            .section {
+                margin-bottom: 40px;
+                padding: 20px;
+                background-color: #f9f9f9;
+                border-radius: 5px;
+            }
+            .viz-container {
+                text-align: center;
+                margin: 20px 0;
+            }
+            .viz-container img {
+                max-width: 100%;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                border-radius: 5px;
+            }
+            .metrics {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            .metric-item {
+                flex: 0 0 48%;
+                margin-bottom: 15px;
+            }
+            .metric-value {
+                font-weight: bold;
+                color: #3498db;
+            }
+            .footer {
+                text-align: center;
+                margin-top: 50px;
+                padding-top: 20px;
+                border-top: 1px solid #eee;
+                font-size: 0.9em;
+                color: #7f8c8d;
+            }
+            .traits-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 20px 0;
+            }
+            .traits-table th, .traits-table td {
+                padding: 10px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+            .traits-table th {
+                background-color: #f2f2f2;
+            }
+            .trait-bar-container {
+                width: 200px;
+                height: 20px;
+                background-color: #eee;
+                border-radius: 10px;
+                overflow: hidden;
+                position: relative;
+            }
+            .trait-bar {
+                height: 100%;
+                position: absolute;
+                left: 50%;
+                top: 0;
+            }
+            .trait-bar.positive {
+                background-color: #2ecc71;
+            }
+            .trait-bar.negative {
+                background-color: #e74c3c;
+                right: 50%;
+                left: auto;
+            }
+            .trait-value {
+                font-weight: bold;
+                text-align: right;
+            }
+            .use-cases {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            .use-case-column {
+                flex: 0 0 48%;
+            }
+            .use-case-list {
+                list-style-type: none;
+                padding-left: 0;
+            }
+            .use-case-list li {
+                padding: 8px 0;
+                border-bottom: 1px solid #eee;
+            }
+            .use-case-list li:before {
+                content: "✓ ";
+                color: #2ecc71;
+                font-weight: bold;
+            }
+            .less-suitable-list li:before {
+                content: "✗ ";
+                color: #e74c3c;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Font Analysis Report</h1>
+            <h2>Merriweather Black</h2>
+            <p>Format: TrueType | Style: serif</p>
+        </div>
+        
+        <div class="section">
+            <h2>Font Metrics</h2>
+            <div class="metrics">
+                <div class="metric-item">
+                    <p>Weight: <span class="metric-value">Black (900)</span></p>
+                </div>
+                <div class="metric-item">
+                    <p>Width: <span class="metric-value">Normal (5)</span></p>
+                </div>
+    
+                <div class="metric-item">
+                    <p>Stroke Width: <span class="metric-value">129.51 units</span></p>
+                </div>
+                <div class="metric-item">
+                    <p>Normalized Stroke Width: <span class="metric-value">0.1295</span></p>
+                </div>
+        
+                <div class="metric-item">
+                    <p>Aspect Ratio: <span class="metric-value">1.23</span></p>
+                </div>
+        
+                <div class="metric-item">
+                    <p>Shape: <span class="metric-value">angular</span></p>
+                </div>
+                <div class="metric-item">
+                    <p>Spacing: <span class="metric-value">wide width, tight spacing</span></p>
+                </div>
+            </div>
+            
+            <div class="viz-container">
+                <img src="font_reports/Merriweather_Black_metrics.png" alt="Font Metrics Visualization">
+            </div>
+        </div>
+    
+        <div class="section">
+            <h2>Personality Analysis</h2>
+        
+            <p><strong>Emotional Description:</strong> This font projects considerable formality and seriousness, projects considerable strength and confidence, exudes sophistication and elegance, has somewhat traditional characteristics, conveys strong reliability and trustworthiness, has a professional, business-appropriate quality, maintains a certain emotional distance, and feels energetic and full of movement.</p>
+            
+            <h3>Personality Traits</h3>
+            <table class="traits-table">
+                <tr>
+                    <th>Trait</th>
+                    <th>Value</th>
+                    <th>Visualization</th>
+                </tr>
+            
+                <tr>
+                    <td>Formality</td>
+                    <td class="trait-value">2.0</td>
+                    <td>
+                        <div class="trait-bar-container">
+                            <div class="trait-bar positive" style="width: 100%;"></div>
+                        </div>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Friendliness</td>
+                    <td class="trait-value">0.0</td>
+                    <td>
+                        <div class="trait-bar-container">
+                            <div class="trait-bar positive" style="width: 0%;"></div>
+                        </div>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Strength</td>
+                    <td class="trait-value">2.0</td>
+                    <td>
+                        <div class="trait-bar-container">
+                            <div class="trait-bar positive" style="width: 100%;"></div>
+                        </div>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Elegance</td>
+                    <td class="trait-value">1.5</td>
+                    <td>
+                        <div class="trait-bar-container">
+                            <div class="trait-bar positive" style="width: 75.0%;"></div>
+                        </div>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Creativity</td>
+                    <td class="trait-value">0.0</td>
+                    <td>
+                        <div class="trait-bar-container">
+                            <div class="trait-bar positive" style="width: 0%;"></div>
+                        </div>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Modernity</td>
+                    <td class="trait-value">-0.5</td>
+                    <td>
+                        <div class="trait-bar-container">
+                            <div class="trait-bar negative" style="width: 25.0%;"></div>
+                        </div>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Playfulness</td>
+                    <td class="trait-value">0.0</td>
+                    <td>
+                        <div class="trait-bar-container">
+                            <div class="trait-bar positive" style="width: 0%;"></div>
+                        </div>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Trustworthiness</td>
+                    <td class="trait-value">1.5</td>
+                    <td>
+                        <div class="trait-bar-container">
+                            <div class="trait-bar positive" style="width: 75.0%;"></div>
+                        </div>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Professionalism</td>
+                    <td class="trait-value">1.0</td>
+                    <td>
+                        <div class="trait-bar-container">
+                            <div class="trait-bar positive" style="width: 50%;"></div>
+                        </div>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Warmth</td>
+                    <td class="trait-value">-0.5</td>
+                    <td>
+                        <div class="trait-bar-container">
+                            <div class="trait-bar negative" style="width: 25.0%;"></div>
+                        </div>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Dynamism</td>
+                    <td class="trait-value">2.0</td>
+                    <td>
+                        <div class="trait-bar-container">
+                            <div class="trait-bar positive" style="width: 100%;"></div>
+                        </div>
+                    </td>
+                </tr>
+                
+            </table>
+            
+            <div class="viz-container">
+                <img src="font_reports/Merriweather_Black_personality_radar.png" alt="Font Personality Radar Chart">
+            </div>
+        
+            <h3>Recommended Use Cases</h3>
+            <div class="use-cases">
+            
+                <div class="use-case-column">
+                    <h4>Suitable For</h4>
+                    <ul class="use-case-list">
+                
+                        <li>Action movie promotions</li>
+                    
+                        <li>Event announcements</li>
+                    
+                        <li>Healthcare information</li>
+                    
+                        <li>Sports brands</li>
+                    
+                        <li>Banking and financial services</li>
+                    
+                        <li>Fitness applications</li>
+                    
+                        <li>Insurance companies</li>
+                    
+                        <li>Educational materials</li>
+                    
+                        <li>Medical packaging</li>
+                    
+                        <li>Formal invitations</li>
+                    
+                        <li>Energy drinks</li>
+                    
+                        <li>Technical documentation</li>
+                    
+                        <li>Professional services</li>
+                    
+                        <li>Government communications</li>
+                    
+                        <li>Scientific publications</li>
+                    
+                        <li>Luxury branding</li>
+                    
+                        <li>High-end restaurant menus</li>
+                    
+                        <li>Wedding stationery</li>
+                    
+                    </ul>
+                </div>
+                
+                <div class="use-case-column">
+                    <h4>Less Suitable For</h4>
+                    <ul class="use-case-list less-suitable-list">
+                
+                        <li>Casual social media posts</li>
+                    
+                        <li>Playful advertising</li>
+                    
+                        <li>Children's content</li>
+                    
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <div class="viz-container">
+                <img src="font_reports/Merriweather_Black_use_cases.png" alt="Font Use Cases">
+            </div>
+            
+        </div>
+        
+        <div class="section">
+            <h2>Font Sample</h2>
+            <div class="viz-container">
+                <img src="font_reports/Merriweather_Black_sample.png" alt="Font Sample Text">
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Generated on 2025-03-04 19:35:55 by Font Analyzer</p>
+        </div>
+    </body>
+    </html>
+    

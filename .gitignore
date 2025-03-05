@@ -1,0 +1,37 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# Generated analysis files
+all_fonts_analysis.json
+all_fonts_analysis.txt
+roboto_analysis.json
+roboto_analysis.txt
+
+# Backup files
+*_backup.py
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+context.txt
+Idea.txt 

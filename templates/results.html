@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block title %}Font Analysis Results{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="h2">Font Analysis Results</h1>
+            <a href="{{ url_for('index') }}" class="btn btn-primary">Analyze Another Font</a>
+        </div>
+        <hr>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h2 class="card-title h4 mb-0">Full Report</h2>
+            </div>
+            <div class="card-body">
+                {% if report_path %}
+                <div class="ratio ratio-16x9">
+                    <iframe src="{{ url_for('download_file', filename=report_path) }}" allowfullscreen></iframe>
+                </div>
+                <div class="mt-3">
+                    <a href="{{ url_for('download_file', filename=report_path) }}" class="btn btn-outline-primary" target="_blank">Open Report in New Tab</a>
+                </div>
+                {% else %}
+                <div class="alert alert-info">
+                    No report was generated. Please try again with the "Generate HTML Report" option enabled.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header bg-info text-white">
+                <h2 class="card-title h4 mb-0">Visualizations</h2>
+            </div>
+            <div class="card-body">
+                <div class="viz-gallery">
+                    {% if viz_paths %}
+                        {% for viz_type, viz_path in viz_paths.items() %}
+                        <div class="viz-thumbnail mb-3">
+                            <a href="{{ url_for('download_file', filename=viz_path) }}" data-bs-toggle="modal" data-bs-target="#vizModal" data-viz-url="{{ url_for('download_file', filename=viz_path) }}">
+                                <img src="{{ url_for('download_file', filename=viz_path) }}" class="img-thumbnail" alt="{{ viz_type }} Visualization">
+                            </a>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="alert alert-info">
+                            No visualizations were generated. Please try again with the "Generate Visualizations" option enabled.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h2 class="card-title h4 mb-0">Actions</h2>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('compare_fonts') }}" class="btn btn-outline-success">Compare With Other Fonts</a>
+                    {% if viz_paths %}
+                    <button class="btn btn-outline-secondary" id="downloadBtn">Download All Visualizations</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Visualization Modal -->
+<div class="modal fade" id="vizModal" tabindex="-1" aria-labelledby="vizModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="vizModalLabel">Font Visualization</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="" id="modalVizImage" class="img-fluid" alt="Font Visualization">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="" id="downloadVizLink" class="btn btn-primary" download>Download</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden data for JavaScript -->
+{% if viz_paths %}
+<div id="viz-data" data-viz-paths="{{ viz_paths|tojson }}" style="display: none;"></div>
+{% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .viz-gallery {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .viz-thumbnail {
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+    
+    .viz-thumbnail:hover {
+        transform: scale(1.05);
+    }
+    
+    .viz-thumbnail img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Handle visualization modal
+    const vizModal = document.getElementById('vizModal');
+    if (vizModal) {
+        vizModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const vizUrl = button.getAttribute('data-viz-url');
+            const modalImg = document.getElementById('modalVizImage');
+            const downloadLink = document.getElementById('downloadVizLink');
+            
+            if (modalImg && downloadLink) {
+                modalImg.src = vizUrl;
+                downloadLink.href = vizUrl;
+            }
+        });
+    }
+    
+    // Handle download all button
+    const downloadBtn = document.getElementById('downloadBtn');
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', function() {
+            alert('This feature requires JSZip library. For now, please download visualizations individually.');
+        });
+    }
+</script>
+{% endblock %} 
