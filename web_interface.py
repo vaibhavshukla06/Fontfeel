@@ -55,6 +55,10 @@ ALLOWED_EXTENSIONS = {'ttf', 'otf', 'woff', 'woff2'}
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(RESULTS_FOLDER, exist_ok=True)
 
+# Create necessary directories
+os.makedirs('font_reports', exist_ok=True)
+os.makedirs('font_visualizations', exist_ok=True)
+
 logger.info(f"Upload folder: {UPLOAD_FOLDER}")
 logger.info(f"Results folder: {RESULTS_FOLDER}")
 
